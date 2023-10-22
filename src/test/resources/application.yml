@@ -12,7 +12,7 @@ spring:
 
 startRoute: direct:input
 fromRoute : file:data/input?delete=true&readLock=none
-toRoute1: mock:output
+toRoute1: mock:result
 
 message: DEV Environment
 

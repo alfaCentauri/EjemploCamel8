@@ -21,14 +21,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.StandardEnvironment;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * @author ricardopresilla@gmail.com
  * @version 1.0
  **/
-//@ActiveProfiles("mock")
-//@RunWith(CamelSpringBootRunner.class)
-//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+/*
+@ActiveProfiles("mock")
+@RunWith(CamelSpringBootRunner.class)
+@SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+*/
 @CamelSpringBootTest
 @EnableAutoConfiguration
 @SpringBootTest(
@@ -95,5 +100,23 @@ public class SimpleCamelRouteTest {
         mockEndpoint.expectedBodiesReceived(message);
         producerTemplate.sendBodyAndHeader( "direct:input", message, "env", "mock" );
         mockEndpoint.assertIsSatisfied();
+    }
+
+    @Test
+    public void testMoveFilesMock_2(){
+        MockEndpoint resultEndpoint = context.getEndpoint("mock:result", MockEndpoint.class);
+        resultEndpoint.expectedMessageCount(2);
+        /* send some messages
+           now lets assert that the mock:foo endpoint received 2 messages */
+        try {
+            resultEndpoint.expectedHeaderReceived("prueba", "Esta es una prueba"); //Define una propiedad del header esperado
+            resultEndpoint.message(0).header("foo").isEqualTo("bar");
+            resultEndpoint.setResultWaitTime(5000); //Cambia el tiempo de espera de la respuesta
+            resultEndpoint.assertIsSatisfied();
+
+        } catch (InterruptedException e) {
+            System.err.println("!!Error: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }
