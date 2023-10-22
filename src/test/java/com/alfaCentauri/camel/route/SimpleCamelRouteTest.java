@@ -9,6 +9,7 @@ import org.apache.camel.spi.Synchronization;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.test.spring.CamelSpringBootRunner;
 import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,15 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.StandardEnvironment;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-
-import java.util.Map;
-import java.util.concurrent.*;
-
-import static org.junit.Assert.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author ricardopresilla@gmail.com
@@ -42,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(
         properties = { "camel.springboot.name=customName" }
 )
-class SimpleCamelRouteTest {
+public class SimpleCamelRouteTest {
 
     @Autowired
     CamelContext context;
@@ -81,12 +73,15 @@ class SimpleCamelRouteTest {
 
     @Test
     public void shouldAutowireProducerTemplate() {
-        assertNotNull(producerTemplate);
+        Assert.assertNotNull(producerTemplate);
     }
 
     @Test
     public void shouldSetCustomName() {
-        assertEquals("camel-1", producerTemplate.getCamelContext().getName());
+        String expected = "camel-1";
+        String result = producerTemplate.getCamelContext().getName();
+        Assert.assertEquals(expected, result);
+        System.out.println("Fin");
     }
 
     @Test
