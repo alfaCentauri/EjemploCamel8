@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.alfaCentauri</groupId>
     <artifactId>camel</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>camelTesting</name>
     <description>Proyecto de ejemplo del uso de Camel con Spring Boot y JUnit. Ejemplo de mocks.</description>
     <properties>
@@ -52,6 +52,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-spring-junit5</artifactId>
+            <version>3.20.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
