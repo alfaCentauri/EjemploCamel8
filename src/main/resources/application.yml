@@ -1,0 +1,50 @@
+spring:
+  config:
+    active:
+      on-profile: dev
+camel.springboot.shutdownTimeout: 2
+
+# spring.config.active.on-profile: dev
+---
+
+spring:
+  profiles: mock
+
+startRoute: direct:input
+fromRoute : file:data/input?delete=true&readLock=none
+toRoute1: mock:output
+
+message: DEV Environment
+
+---
+
+spring:
+  profiles: dev
+
+startRoute: timer:hello?period=10s
+fromRoute : file:data/input?delete=true&readLock=none
+toRoute1: file:data/output
+
+message: DEV Environment
+
+---
+spring:
+  profiles: stage
+
+startRoute: timer:hello?period=10s
+fromRoute : file:data/input?delete=true&readLock=none
+toRoute1: file:data/output
+
+message: STAGE Environment
+
+---
+spring:
+  profiles: prod
+
+startRoute: timer:hello?period=10s
+fromRoute : file:data/input?delete=true&readLock=none
+toRoute1: file:data/output
+
+
+message: PROD Environment
+---

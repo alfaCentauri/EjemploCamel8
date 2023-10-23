@@ -95,10 +95,11 @@ public class SimpleCamelRouteTest {
                 "ADD,100,Samsung TV,500\n" +
                 "ADD,101,LG TV,500";
         MockEndpoint mockEndpoint = new MockEndpoint();
-        mockEndpoint.setEndpointUriIfNotSpecified ("mock/output");
-        mockEndpoint.expectedMessageCount(1);
-        mockEndpoint.expectedBodiesReceived(message);
-        producerTemplate.sendBodyAndHeader( "direct:input", message, "env", "mock" );
+        mockEndpoint.setEndpointUriIfNotSpecified ("direct:output"); //Ruta que responderá
+        mockEndpoint.expectedMessageCount(1); //Cantidad de mensajes que espera recibir
+        mockEndpoint.expectedBodiesReceived(message); //El mensaje que espera recibir
+        producerTemplate.sendBody("direct:output", message); //Envia un mensaje al destino indicado
+//        producerTemplate.sendBodyAndHeader( "direct:input", message, "env", "mock" );
         mockEndpoint.assertIsSatisfied();
     }
 
