@@ -7,6 +7,6 @@ public class MyRouter extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:start")
                 .setBody(constant("Goodbye"))
-                .to("file:output");
+                .to("file:mock/output");
     }
 }

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @CamelSpringBootTest
 @EnableAutoConfiguration
 @SpringBootTest(
-        properties = { "camel.springboot.name=customName" }
+        properties = { "camel.springboot.name=pruebas" }
 )
 class MyRouterTest {
 
@@ -30,7 +30,7 @@ class MyRouterTest {
     @Test
     void configure() throws InterruptedException {
         mockEndpoint.expectedBodiesReceived("Goodbye");
-        template.sendBody("direct:input", null);
+        template.sendBody("direct:input", "Goodbye");
         mockEndpoint.assertIsSatisfied();
     }
 }
