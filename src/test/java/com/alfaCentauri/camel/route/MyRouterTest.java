@@ -33,4 +33,12 @@ class MyRouterTest {
         template.sendBody("direct:input", "Goodbye");
         mockEndpoint.assertIsSatisfied();
     }
+
+    @Test
+    void configureFail() throws InterruptedException {
+        mockEndpoint.expectedBodiesReceived("Goodbye");
+        mockEndpoint.expectedMessageCount(0);
+        template.sendBody("direct:input", "Goodbye");
+        mockEndpoint.assertIsSatisfied();
+    }
 }
